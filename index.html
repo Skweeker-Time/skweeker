@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skweeker | Delightful & Useful Experiences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Amber, Teal) -->
+    <!-- Application Structure Plan: A vertical, single-page scrolling narrative. The structure flows from a high-level mission statement (Hero) to the team's philosophy (About), then dives into the tangible product (Lil' Nibbles), outlines future growth (Roadmap), and ends with a conclusion. This narrative structure is more engaging than a simple document layout. It guides the user through the company's story, using an interactive canvas for the game section and clickable cards for the roadmap to encourage exploration and make the concepts feel more concrete and dynamic. -->
+    <!-- Visualization & Content Choices: 
+        - Company Mission -> Goal: Inform/Inspire -> Presentation: Full-screen hero section with a bold tagline. Justification: Creates a strong, immediate first impression.
+        - Lil' Nibbles Game -> Goal: Engage/Inform -> Presentation: A two-column layout with text and an interactive HTML Canvas element. -> Interaction: A "mouse" (circle) on the canvas follows the user's cursor. -> Justification: This provides a playful, tangible connection to the game's concept without needing complex assets, making the project more memorable. -> Library/Method: Vanilla JS on HTML Canvas.
+        - Roadmap -> Goal: Organize/Inform -> Presentation: A horizontal series of clickable cards representing stages. -> Interaction: Clicking a card highlights it and displays descriptive text for that stage. -> Justification: This transforms a static list into an interactive exploration of the company's future plans, encouraging user engagement. -> Library/Method: HTML/CSS/JS.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #292524; /* stone-800 */
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 2.5rem;
+            color: #115e59; /* teal-700 */
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            color: #57534e; /* stone-600 */
+            max-width: 48rem;
+            margin: 1rem auto 0;
+        }
+        .roadmap-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+        .roadmap-card.selected {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            background-color: #14b8a6; /* teal-500 */
+            color: white;
+        }
+        .roadmap-card.selected .card-phase {
+            color: white;
+        }
+        .roadmap-card.selected .card-icon {
+            background-color: white;
+            color: #14b8a6; /* teal-500 */
+        }
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            max-height: 400px;
+            border-radius: 0.5rem;
+            background-color: #e7e5e4; /* stone-200 */
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .game-canvas-container {
+                min-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-bold text-teal-700">Skweeker</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-stone-600 hover:text-teal-600 transition">About</a>
+                <a href="#projects" class="text-stone-600 hover:text-teal-600 transition">Projects</a>
+                <a href="#roadmap" class="text-stone-600 hover:text-teal-600 transition">Roadmap</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="h-screen flex items-center justify-center text-center bg-stone-100 px-4">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-6xl font-bold text-stone-800 leading-tight">
+                    Creating <span class="text-teal-600">delightful</span> and <span class="text-teal-600">useful</span> digital experiences.
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-stone-600">
+                    From engaging simple games to innovative utility applications, we build software with purpose and passion.
+                </p>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="section-title">Who We Are</h2>
+                <p class="section-subtitle">
+                    Skweeker is a creative software development startup focused on building high-quality, user-friendly apps and games. Our passion lies in crafting experiences that are not only functional and fun but also intuitive and accessible to everyone. We are currently a small, dynamic team with big plans to grow and innovate.
+                </p>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 md:py-32 bg-stone-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Our Debut Project</h2>
+                    <p class="section-subtitle">
+                        Our journey begins in the mobile gaming space. We believe in starting small, dreaming big, and bringing our creative ideas to life one project at a time.
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                        <div>
+                            <h3 class="text-3xl font-bold text-stone-800">Lil' Nibbles <span class="text-sm font-medium bg-amber-400 text-amber-800 px-2 py-1 rounded-full align-middle">Alpha</span></h3>
+                            <p class="mt-4 text-stone-600">
+                                Our debut title is a charming puzzle-adventure game. This section introduces the core concepts of the game. On the right, you can interact with a simple canvas element that captures the playful spirit of being a mouse on a mission.
+                            </p>
+                            <div class="mt-6 space-y-4">
+                                <div>
+                                    <h4 class="font-bold text-lg text-teal-700">The Premise</h4>
+                                    <p class="text-stone-600">Players take on the role of a clever little mouse in a mysterious room. The objective isn't immediately obvious; it's up to you to explore, interact, and uncover the ultimate goal.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-teal-700">The Gameplay</h4>
+                                    <p class="text-stone-600">The core challenge is to piece together clues and solve environmental puzzles. A central hint guides the player: find the cheese and figure out how to get it back home.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-canvas-container">
+                            <canvas id="mouseCanvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">The Road Ahead</h2>
+                    <p class="section-subtitle">
+                        Our journey begins with *Lil' Nibbles*, but it doesn't end there. Our roadmap is designed for steady, sustainable growth. Click on each phase to learn more about our plans.
+                    </p>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+                    <div class="roadmap-card selected bg-white p-6 rounded-lg shadow-md border border-stone-200 w-full md:w-1/3 cursor-pointer" data-step="1">
+                        <div class="flex items-center gap-4">
+                            <div class="card-icon bg-teal-100 text-teal-600 p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <div>
+                                <p class="card-phase text-stone-500 text-sm font-medium">Phase 1</p>
+                                <h4 class="font-bold text-lg">Launch & Refine</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="roadmap-card bg-white p-6 rounded-lg shadow-md border border-stone-200 w-full md:w-1/3 cursor-pointer" data-step="2">
+                        <div class="flex items-center gap-4">
+                            <div class="card-icon bg-teal-100 text-teal-600 p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                            </div>
+                            <div>
+                                <p class="card-phase text-stone-500 text-sm font-medium">Phase 2</p>
+                                <h4 class="font-bold text-lg">Expand Portfolio</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="roadmap-card bg-white p-6 rounded-lg shadow-md border border-stone-200 w-full md:w-1/3 cursor-pointer" data-step="3">
+                        <div class="flex items-center gap-4">
+                            <div class="card-icon bg-teal-100 text-teal-600 p-3 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                            </div>
+                            <div>
+                                <p class="card-phase text-stone-500 text-sm font-medium">Phase 3</p>
+                                <h4 class="font-bold text-lg">Venture into Utilities</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="roadmap-details" class="mt-10 text-center max-w-2xl mx-auto bg-stone-100 p-6 rounded-lg min-h-[120px]">
+                    <p class="text-stone-700"></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-800 text-stone-300 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-bold text-lg">Skweeker</p>
+            <p class="mt-2 text-sm">Driven by creativity, a commitment to quality, and the endless possibilities of technology.</p>
+            <p class="mt-4 text-xs text-stone-400">&copy; 2024 Skweeker. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('mouseCanvas');
+            const ctx = canvas.getContext('2d');
+            let mouse = { x: null, y: null, radius: 8 };
+
+            let parentContainer = canvas.parentElement;
+            
+            function resizeCanvas() {
+                canvas.width = parentContainer.clientWidth;
+                canvas.height = parentContainer.clientHeight;
+                mouse.x = canvas.width / 2;
+                mouse.y = canvas.height / 2;
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            canvas.addEventListener('mousemove', (event) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = event.clientX - rect.left;
+                mouse.y = event.clientY - rect.top;
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                mouse.x = canvas.width / 2;
+                mouse.y = canvas.height / 2;
+            });
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+                ctx.arc(mouse.x, mouse.y, mouse.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#14b8a6'; // teal-500
+                ctx.fill();
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            const roadmapCards = document.querySelectorAll('.roadmap-card');
+            const detailsContainer = document.getElementById('roadmap-details').querySelector('p');
+            const roadmapDetails = {
+                1: 'Our immediate priority is to complete development on *Lil\' Nibbles* and launch it to the public. We will continue to support it with updates and new content based on player feedback.',
+                2: 'We are already conceptualizing our second game, aiming to build on the lessons learned from our first project and expand our presence in the gaming world.',
+                3: 'Looking forward, Skweeker plans to expand beyond gaming. We are excited by the potential of Artificial Intelligence (AI) and aim to develop smart, helpful applications that simplify everyday tasks.'
+            };
+
+            function updateRoadmapDetails(step) {
+                roadmapCards.forEach(card => {
+                    if (card.dataset.step === step) {
+                        card.classList.add('selected');
+                    } else {
+                        card.classList.remove('selected');
+                    }
+                });
+                detailsContainer.textContent = roadmapDetails[step];
+            }
+
+            roadmapCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    updateRoadmapDetails(card.dataset.step);
+                });
+            });
+            
+            updateRoadmapDetails('1');
+        });
+    </script>
+</body>
+</html>
