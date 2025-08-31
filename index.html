@@ -85,7 +85,7 @@
         <section id="hero" class="h-screen flex items-center justify-center text-center bg-stone-100 px-4">
             <div class="max-w-3xl">
                 <a href="#hero">
-                    <img src="assets/skweeker-logo-v3.jpg" alt="Skweeker Logo" class="mx-auto mb-6 h-96">
+                    <img src="assets/skweeker-logo-v1-full.jpeg" alt="Skweeker Logo" class="mx-auto mb-6 h-96">
                 </a>
                 <h1 class="text-4xl md:text-6xl font-bold text-stone-800 leading-tight">
                     Creating <span class="text-teal-600">delightful</span> and <span class="text-teal-600">useful</span> digital experiences.
@@ -117,23 +117,24 @@
                 <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg">
                     <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                         <div>
-                            <h3 class="text-3xl font-bold text-stone-800">Lil' Nibbles <span class="text-sm font-medium bg-amber-400 text-amber-800 px-2 py-1 rounded-full align-middle">Alpha</span></h3>
-                            <p class="mt-4 text-stone-600">
-                                Our debut title is a charming puzzle-adventure game. This section introduces the core concepts of the game. On the right, you can interact with a simple canvas element that captures the playful spirit of being a mouse on a mission.
+                            <h3 class="text-3xl font-bold text-stone-800">Pipes & Potions <span class="text-sm font-medium bg-amber-400 text-amber-800 px-2 py-1 rounded-full align-middle">Alpha</span></h3>
+                            <p class="mt-4 text-stone-600"> Our debut title is the quaint <i><b>Pipes & Potions</i></b>. In this game, you're an apprentice wizard industrializing potion production in a cozy cottage turned factory. 
                             </p>
+                            <img src="assets/PipesNPotions.png" alt="Pipes & Potions Game Preview" class="w-full rounded-lg mt-4 md:mt-0 md:max-w-[50%] md:ml-4 object-cover">
                             <div class="mt-6 space-y-4">
                                 <div>
                                     <h4 class="font-bold text-lg text-teal-700">The Premise</h4>
-                                    <p class="text-stone-600">Players take on the role of a clever little mouse in a mysterious room. The objective isn't immediately obvious; it's up to you to explore, interact, and uncover the ultimate goal.</p>
+                                    <p class="text-stone-600"> Players spawn in a cozy location to place pipes and successfully route potions. The prototype release will provide 3 levels with several pipe types (straight, L, combiner), and color-mixing potion mechanics followed by the production version with many more challenges.</p>
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-lg text-teal-700">The Gameplay</h4>
-                                    <p class="text-stone-600">The core challenge is to piece together clues and solve environmental puzzles. A central hint guides the player: find the cheese and figure out how to get it back home.</p>
+                                    <p class="text-stone-600"> Solve puzzles by arranging pipes to transport, mix, and deliver colorful potions to meet demand, blending potions where needed. Earn stars by completing levels efficiently in this whimsical, chaotic puzzler </p>
                                 </div>
                             </div>
                         </div>
                         <div class="game-canvas-container">
-                            <canvas id="mouseCanvas"></canvas>
+                            <canvas id="mouseCanvas" class="w-full"></canvas>
+                            <img src="PipesNPotions.png" alt="Pipes & Potions Game Preview" class="w-full rounded-lg mt-4 md:mt-0 md:max-w-[50%] md:ml-4 object-cover">
                         </div>
                     </div>
                 </div>
@@ -145,7 +146,7 @@
                 <div class="text-center mb-12">
                     <h2 class="section-title">The Road Ahead</h2>
                     <p class="section-subtitle">
-                        Our journey begins with <i><b>Lil' Nibbles</i></b>, but it doesn't end there. Our roadmap is designed for steady, sustainable growth. Click on each phase to learn more about our plans.
+                        Our journey begins with <i><b>Pipes & Potions</i></b>, but it doesn't end there. Our roadmap is designed for steady, sustainable growth. Click on each phase to learn more about our plans.
                     </p>
                 </div>
 
@@ -243,8 +244,8 @@
             const roadmapCards = document.querySelectorAll('.roadmap-card');
             const detailsContainer = document.getElementById('roadmap-details').querySelector('p');
             const roadmapDetails = {
-                1: 'Our immediate priority is to complete development of Lil\' Nibbles and launch it to the public. We will continue to support it with updates and new content based on player feedback.',
-                2: 'We are already conceptualizing our second game, aiming to build on the lessons learned from our first project and expand our presence in the gaming world.',
+                1: 'Our immediate priority is to complete development of Pipes \& Potions and launch it to the public. Our goal is to support with updates and new content based on player feedback.',
+                2: 'We are already conceptualizing our second game, Pier 15, aiming to build on the lessons learned from our first project and expand our presence in the gaming world.',
                 3: 'Looking forward, Skweeker plans to expand beyond gaming. We are excited by the potential of Artificial Intelligence (AI) and aim to develop smart, helpful applications that simplify everyday tasks.'
             };
 
