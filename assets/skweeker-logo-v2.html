@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Skweeker Logo</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+   <style>
+       body {
+           font-family: 'Inter', sans-serif;
+       }
+   </style>
+</head>
+<body class="bg-stone-100 flex items-center justify-center h-screen">
+   <div class="text-center">
+       <canvas id="logoCanvas" width="200" height="200"></canvas>
+       <h1 id="logoText" class="text-4xl font-bold text-teal-700 mt-4" style="opacity: 0; transition: opacity 1s ease-in-out;">Skweeker</h1>
+   </div>
+
+   <script>
+       document.addEventListener('DOMContentLoaded', () => {
+           const canvas = document.getElementById('logoCanvas');
+           const ctx = canvas.getContext('2d');
+           const logoText = document.getElementById('logoText');
+
+           const teal = '#14b8a6';
+           const darkGray = '#44403c'; // stone-700
+          
+           const centerX = canvas.width / 2;
+           const centerY = canvas.height / 2;
+          
+           let progress = 0;
+          
+           function drawMouseBody(p) {
+               ctx.beginPath();
+               ctx.moveTo(centerX - 60, centerY + 40);
+               const cp1x = centerX - 60;
+               const cp1y = centerY - 50;
+               const cp2x = centerX + 60;
+               const cp2y = centerY - 50;
+               const endX = centerX + 50;
+               const endY = centerY + 40;
+              
+               const currentEndX = (endX - (centerX - 60)) * p + (centerX - 60);
+              
+               ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, currentEndX, endY);
+               ctx.lineWidth = 25;
+               ctx.strokeStyle = teal;
+               ctx.lineCap = 'round';
+               ctx.stroke();
+           }
+
+           function drawGear(p) {
+               const radius = 35;
+               const teeth = 6;
+               const toothHeight = 8;
+              
+               ctx.save();
+               ctx.translate(centerX - 25, centerY - 25);
+               ctx.lineWidth = 4;
+               ctx.strokeStyle = darkGray;
+               ctx.fillStyle = darkGray;
+
+               ctx.beginPath();
+               for (let i = 0; i < teeth; i++) {
+                   const angle = (i / teeth) * Math.PI * 2;
+                   if (p < (i / teeth)) break;
+
+                   const x1 = Math.cos(angle) * radius;
+                   const y1 = Math.sin(angle) * radius;
+                   const x2 = Math.cos(angle) * (radius + toothHeight);
+                   const y2 = Math.sin(angle) * (radius + toothHeight);
+                  
+                   const nextAngle = ((i + 0.5) / teeth) * Math.PI * 2;
+                   const x3 = Math.cos(nextAngle) * (radius + toothHeight);
+                   const y3 = Math.sin(nextAngle) * (radius + toothHeight);
+                   const x4 = Math.cos(nextAngle) * radius;
+                   const y4 = Math.sin(nextAngle) * radius;
+                  
+                   ctx.moveTo(x1, y1);
+                   ctx.lineTo(x2, y2);
+                   ctx.lineTo(x3, y3);
+                   ctx.lineTo(x4, y4);
+               }
+               ctx.stroke();
+              
+               ctx.beginPath();
+               ctx.arc(0, 0, radius - toothHeight, 0, Math.PI * 2 * p);
+               ctx.fill();
+
+               ctx.restore();
+           }
+
+           function animate() {
+               ctx.clearRect(0, 0, canvas.width, canvas.height);
+              
+               if (progress < 1) {
+                   progress += 0.02;
+               } else {
+                   progress = 1;
+               }
+
+               drawGear(progress);
+               drawMouseBody(progress);
+
+               if (progress >= 1) {
+                   logoText.style.opacity = '1';
+                   return; // Stop the animation
+               }
+
+               requestAnimationFrame(animate);
+           }
+
+           animate();
+       });
+   </script>
+</body>
+</html>
