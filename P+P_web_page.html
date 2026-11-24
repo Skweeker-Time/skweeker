@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skweeker | Delightful & Useful Experiences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Amber, Teal) -->
+    <!-- Application Structure Plan: A vertical, single-page scrolling narrative. The structure flows from a high-level mission statement (Hero) to the team's philosophy (About), then dives into the tangible product (Lil' Nibbles), outlines future growth (Roadmap), and ends with a conclusion. This narrative structure is more engaging than a simple document layout. It guides the user through the company's story, using an interactive canvas for the game section and clickable cards for the roadmap to encourage exploration and make the concepts feel more concrete and dynamic. -->
+    <!-- Visualization & Content Choices: 
+        - Company Mission -> Goal: Inform/Inspire -> Presentation: Full-screen hero section with a bold tagline. Justification: Creates a strong, immediate first impression.
+        - Lil' Nibbles Game -> Goal: Engage/Inform -> Presentation: A two-column layout with text and an interactive HTML Canvas element. -> Interaction: A "mouse" (circle) on the canvas follows the user's cursor. -> Justification: This provides a playful, tangible connection to the game's concept without needing complex assets, making the project more memorable. -> Library/Method: Vanilla JS on HTML Canvas.
+        - Roadmap -> Goal: Organize/Inform -> Presentation: A horizontal series of clickable cards representing stages. -> Interaction: Clicking a card highlights it and displays descriptive text for that stage. -> Justification: This transforms a static list into an interactive exploration of the company's future plans, encouraging user engagement. -> Library/Method: HTML/CSS/JS.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+		@font-face {
+			font-family: 'Copperplate Gothic Bold';
+			src: url('assets/P+P/COPRGTB.TTF') format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+		
+		.game-title-style {
+			font-family: 'Copperplate Gothic Bold', serif;
+			font-variant: small-caps;
+			color: #ffffff;
+			-webkit-text-stroke: 2px #000000;
+			paint-order: stroke fill;
+			text-shadow: 
+				0 0 6px #7e22ce,
+				0 3px 0 #000000;
+			letter-spacing: 0.04em;
+		}
+	
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+            color: #292524; /* stone-800 */
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 2.5rem;
+            color: #115e59; /* teal-700 */
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            color: #57534e; /* stone-600 */
+            max-width: 48rem;
+            margin: 1rem auto 0;
+        }
+        .roadmap-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+        .roadmap-card.selected {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            background-color: #14b8a6; /* teal-500 */
+            color: white;
+        }
+        .roadmap-card.selected .card-phase {
+            color: white;
+        }
+        .roadmap-card.selected .card-icon {
+            background-color: white;
+            color: #14b8a6; /* teal-500 */
+        }
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            max-height: 400px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .game-canvas-container {
+                min-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-teal-700 hover:text-teal-800 transition">Skweeker LLC</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-stone-600 hover:text-teal-600 transition">About</a>
+                <a href="#projects" class="text-stone-600 hover:text-teal-600 transition">Projects</a>
+                <a href="#roadmap" class="text-stone-600 hover:text-teal-600 transition">Roadmap</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        
+
+		<section id="projects" class="py-20 md:py-32 bg-stone-100">
+            <div class="container mx-auto px-6">
+
+                <div class="bg-white p-8 md:p-12 rounded-xl shadow-lg">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                        <div>
+                            <h3 class="text-4xl font-bold flex items-center gap-3 flex-wrap">
+								<span class="game-title-style">Pipes & Potions</span>
+								<span class="text-sm font-sans font-medium bg-amber-400 text-amber-800 px-2.5 py-1 rounded-full">
+									Alpha
+								</span>
+							</h3>
+							<div class="mt-6 space-y-4">
+                            <p class="mt-4 text-stone-600"> Our debut title is <i><b>Pipes & Potions</b></i>, a puzzle game where you use as few pipes as possible to pump and mix colorful liquids from starting vats to their matching potion tables! Hit play and watch them pulse through the pipes to the beat of the music!
+                            </p>
+                            <img src="assets/P+P/P+P_gif_3.gif" alt="Pipes & Potions Game Preview" class="w-full rounded-lg mt-4 md:mt-0 md:max-w-[50%] md:ml-4 object-cover">
+                            
+                                <div>
+                                    <h4 class="font-bold text-lg text-teal-700">The Gameplay</h4>
+                                    <p class="text-stone-600"> Take your time solving each level using a variety of pipes and color mixing cauldrons. Since each pipe used reduces your star score, the real challenge is finding a solution using the fewest pipes. </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-teal-700">The Alpha</h4>
+                                    <p class="text-stone-600"> This early 10-level Alpha is all about testing our core puzzle mechanics and star score difficulty. Play through the puzzles and share your feedback to help shape what comes next! </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="game-canvas-container">
+                                <img src="assets/P+P/P+P_gif_2.gif" alt="Pipes & Potions Game Preview" class="w-full rounded-lg mt-4 object-cover">
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://skweeker.com/P+P/" target="_blank" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                                    Play Pipes + Potions Alpha Game
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-800 text-stone-300 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-bold text-lg">Skweeker LLC</p>
+            <p class="mt-2 text-sm">Driven by creativity, a commitment to quality, and the endless possibilities of technology.</p>
+            <p class="mt-4 text-xs text-stone-400">&copy; 2025 Skweeker, LLC. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+           /* const canvas = document.getElementById('mouseCanvas');
+            const ctx = canvas.getContext('2d');
+            let mouse = { x: null, y: null, radius: 8 };
+
+            let parentContainer = canvas.parentElement;
+            
+             function resizeCanvas() {
+                canvas.width = parentContainer.clientWidth;
+                canvas.height = parentContainer.clientHeight;
+                mouse.x = canvas.width / 2;
+                mouse.y = canvas.height / 2;
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            canvas.addEventListener('mousemove', (event) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = event.clientX - rect.left;
+                mouse.y = event.clientY - rect.top;
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                mouse.x = canvas.width / 2;
+                mouse.y = canvas.height / 2;
+            });
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+                ctx.arc(mouse.x, mouse.y, mouse.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#14b8a6'; // teal-500
+                ctx.fill();
+                requestAnimationFrame(animate);
+            }
+            animate(); */
+
+            const roadmapCards = document.querySelectorAll('.roadmap-card');
+            const detailsContainer = document.getElementById('roadmap-details').querySelector('p');
+            const roadmapDetails = {
+                1: 'Our immediate priority is to complete development of Pipes \& Potions and launch it to the public. Our goal is to support with updates and new content based on player feedback.',
+                2: 'We are already conceptualizing our second game, Pier 15, aiming to build on the lessons learned from our first project and expand our presence in the gaming world.',
+                3: 'Looking forward, Skweeker plans to expand beyond gaming. We are excited by the potential of Artificial Intelligence (AI) and aim to develop smart, helpful applications that simplify everyday tasks.'
+            };
+
+            function updateRoadmapDetails(step) {
+                roadmapCards.forEach(card => {
+                    if (card.dataset.step === step) {
+                        card.classList.add('selected');
+                    } else {
+                        card.classList.remove('selected');
+                    }
+                });
+                detailsContainer.textContent = roadmapDetails[step];
+            }
+
+            roadmapCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    updateRoadmapDetails(card.dataset.step);
+                });
+            });
+            
+            updateRoadmapDetails('1');
+        });
+    </script>
+</body>
+</html>
